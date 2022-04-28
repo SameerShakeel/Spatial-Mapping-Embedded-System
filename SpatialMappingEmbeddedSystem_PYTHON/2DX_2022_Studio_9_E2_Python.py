@@ -30,9 +30,9 @@ s.reset_input_buffer()
 #Preparing the 3D plot that will be used later
 fig = plt.figure(figsize=(10,10))
 PlotAxis = fig.add_subplot(111, projection='3d')
-PlotAxis.set_xlabel('z')
+PlotAxis.set_xlabel('x')
 PlotAxis.set_ylabel('y')
-PlotAxis.set_zlabel('x')
+PlotAxis.set_zlabel('z')
 
 #Flag to start receiving data
 s.write('s'.encode())
@@ -99,12 +99,12 @@ if(plotCurrentData == 'Y'):
             z += 0.1
 
         #These three lines below define the points of where to plot the x,y, and z values from a defined meaurement
-        Coordinate_X = [(dataFloatList[count-1])*cos((count-1)*0.09817477),(dataFloatList[count])*cos(count*0.09817477)]
+        Coordinate_Z = [(dataFloatList[count-1])*cos((count-1)*0.09817477),(dataFloatList[count])*cos(count*0.09817477)]
         Coordinate_Y = [(dataFloatList[count-1])*sin((count-1)*0.09817477),(dataFloatList[count])*sin(count*0.09817477)]
-        Coordinate_Z = [z,z] 
+        Coordinate_X = [z,z] 
 
         #The lines below plot the data points in cartesian form
-        PlotAxis.scatter( (dataFloatList[count])*cos(count*0.09817477) ,(dataFloatList[count])*sin(count*0.09817477),z, c = "black", s = 1)
+        PlotAxis.scatter( z,(dataFloatList[count])*sin(count*0.09817477),(dataFloatList[count])*cos(count*0.09817477), c = "black", s = 1)
         PlotAxis.plot(Coordinate_X ,Coordinate_Y,Coordinate_Z, color = 'black')
         
         #Increment the counter for the next iteration
@@ -116,7 +116,7 @@ if(plotCurrentData == 'Y'):
     #While loop that continously runs as long as we have data to graph
     #This while loop is used to plot the lines connecting the points on the plot
     while(count < len(dataFloatList)-64):
-        Coordinate_X = [(dataFloatList[count])*cos((count)*0.09817477),(dataFloatList[count+64])*cos(count*0.09817477)]
+        Coordinate_Z = [(dataFloatList[count])*cos((count)*0.09817477),(dataFloatList[count+64])*cos(count*0.09817477)]
         Coordinate_Y = [(dataFloatList[count])*sin((count)*0.09817477),(dataFloatList[count+64])*sin(count*0.09817477)]
 
         
@@ -125,7 +125,7 @@ if(plotCurrentData == 'Y'):
         if(count % 64 == 0 and count >= 64):
             z += 0.1
 
-        Coordinate_Z = [z,z+0.1]
+        Coordinate_X = [z,z+0.1]
         PlotAxis.plot(Coordinate_X ,Coordinate_Y,Coordinate_Z, color = 'black')
         count += 1
     
